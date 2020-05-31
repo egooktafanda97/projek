@@ -1,0 +1,26 @@
+<?php
+//kalau memang  db->user->uplink berisi referal dari userlain pastekan ini bg soal nya yang ada sekarang kodereferal gak di inputkan
+require("../config.php");
+$tipe = "Daftar";
+
+        $nama_depan = $conn->real_escape_string(trim(filter($_POST['nama_depan'])));
+        $nama_belakang = $conn->real_escape_string(trim(filter($_POST['nama_belakang'])));
+        $email = $conn->real_escape_string(trim(filter($_POST['email'])));
+        $username = $conn->real_escape_string(trim(filter($_POST['username'])));
+        $no_hp = $conn->real_escape_string(trim(filter($_POST['no_hp'])));
+        $password = $conn->real_escape_string(trim(filter($_POST['password'])));
+        $password2 = $conn->real_escape_string(trim(filter($_POST['password2'])));
+        $pin = $conn->real_escape_string(trim(filter($_POST['pin'])));
+        // $kode_referral = $conn->real_escape_string(trim(filter($_POST['kode_referral'])));
+        $kode_referral = $conn->real_escape_string(trim(filter($_POST['referral'])));
+
+        $pengguna = $data_kode['username'];
+        $kode_ref = acak(3).acak_nomor(4);
+        $kode_referral = ((empty($kode_referral))?'Pendaftaran Gratis':$kode_referral);
+
+        $hash_password = password_hash($password, PASSWORD_DEFAULT);
+        $api_key =  acak(20);
+
+        if ($conn->query("INSERT INTO users VALUES ('', '$nama_depan', '$nama_belakang', '$nama_depan $nama_belakang', '$email', '$username', '$hash_password', '0', '0', '0', 'Member', 'Aktif', 'Sudah Verifikasi', '$pin', '$api_key', '$kode_referral', '$pengguna', '$date', '$time', '0', '$no_hp', '', '$kode_ref', '', '0')") == true);
+
+?>
