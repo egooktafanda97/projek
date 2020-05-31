@@ -1,5 +1,4 @@
 <?php
-//kalau memang  db->user->uplink berisi referal dari userlain pastekan ini bg soal nya yang ada sekarang kodereferal gak di inputkan
 require("../config.php");
 $tipe = "Daftar";
 
@@ -14,13 +13,19 @@ $tipe = "Daftar";
         // $kode_referral = $conn->real_escape_string(trim(filter($_POST['kode_referral'])));
         $kode_referral = $conn->real_escape_string(trim(filter($_POST['referral'])));
 
-        $pengguna = $data_kode['username'];
+
+        // klo kliru pilih salah satu bg $pengguna nya.
+        // $users__referal = $conn->query("SELECT*FROM users WHERE kode_referral = '".$kode_referral."'");
+       
+        // $pengguna       = $users__referal->fetch_assoc()['username'];
+
+        $pengguna = $kode_referral;
         $kode_ref = acak(3).acak_nomor(4);
-        $kode_referral = ((empty($kode_referral))?'Pendaftaran Gratis':$kode_referral);
+      
 
         $hash_password = password_hash($password, PASSWORD_DEFAULT);
         $api_key =  acak(20);
 
-        if ($conn->query("INSERT INTO users VALUES ('', '$nama_depan', '$nama_belakang', '$nama_depan $nama_belakang', '$email', '$username', '$hash_password', '0', '0', '0', 'Member', 'Aktif', 'Sudah Verifikasi', '$pin', '$api_key', '$kode_referral', '$pengguna', '$date', '$time', '0', '$no_hp', '', '$kode_ref', '', '0')") == true);
+        if ($conn->query("INSERT INTO users VALUES ('', '$nama_depan', '$nama_belakang', '$nama_depan $nama_belakang', '$email', '$username', '$hash_password', '0', '0', '0', 'Member', 'Aktif', 'Sudah Verifikasi', '$pin', '$api_key', 'Pendaftaran Gratis', '$pengguna', '$date', '$time', '0', '$no_hp', '', '$kode_ref', '', '0')") == true);
 
 ?>
