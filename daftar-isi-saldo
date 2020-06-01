@@ -49,7 +49,7 @@ require '../lib/session_login_admin.php';
 
                    
 
-                    if($datanya['metode_isi_saldo'] == 'saldo_sosmed'){
+                    if($datanya['metode_isi_saldo'] == 'saldo_sosmed' && $users__['riwayat_topUp'] == '0'){
 
                        $conn->query("UPDATE users SET koin = koin+".$data_referral['jumlah']." WHERE username = '".$users__referal['username']."'");
 
@@ -59,13 +59,13 @@ require '../lib/session_login_admin.php';
 
 
                        // masi bingung sama isi nya di db bg--
-                        // $conn->query("INSERT INTO riwayat_referral VALUES ('', '".$users__['username']."', '".$data_pengguna['uplink_referral']."', '".$data_pengguna['kode_referral']."', '".$data_referral['jumlah']."', '$date', '$time')");
-
-
+                        $conn->query("INSERT INTO riwayat_referral VALUES ('', '".$users__referal['username']."', '".$users__['uplink']."', '".$users__referal['kode_referral']."', '".$data_referral['jumlah']."', '$date', '$time')");
 
                     }
+                    $rT = $users__['riwayat_topUp'];
+                    $rT = $users__['riwayat_topUp']+1;
+                    $conn->query("UPDATE users SET riwayat_topUp = '".$rT."' WHERE username = '".$users__referal['username']."'");
 
-                   
 
 
 
