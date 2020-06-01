@@ -1,0 +1,147 @@
+		<!-- Start JS -->
+		<script src="<?php echo $config['web']['url'] ?>assets/js/pages/custom/login/jquery-2.2.0.min.js"></script>
+		<script type="text/javascript" src="http://localhost/skripsi_finish/assets/admin/costum/js/sweetalert.min.js"></script>
+		</style>
+		<script type="text/javascript">
+			$('#submit').prop('disabled', true);
+			$('#submit').addClass('disabled');
+			$('#submit').css('cursor','not-allowed');
+			function onChanges(){
+				if(empty($('#nama').val()) || empty($('#name').val()) || empty($('#email').val()) || empty($('#no_hp').val()) || empty($('#username').val()) || empty($('#password').val()) || empty($('#password2').val()) || empty($('#pin').val())){
+					$('#submit').prop('disabled', true);
+					$('#submit').addClass('disabled');
+					$('#submit').css('cursor','not-allowed');
+				}else{
+					$('#submit').prop('disabled', false);
+					$('#submit').removeClass('disabled');
+					$('#submit').css('cursor','pointer');
+				}
+			}
+		</script>
+
+		<script type="text/javascript">
+			$(document).ready(function(){
+			    //submit form validasi
+			    $('#formInput').submit(function(e){
+			    e.preventDefault();
+			    var valid=true;
+			    swal({
+			      title: "Konfirmasi Simpan Data",
+			      text: "Data Akan di Simpan Ke Database",
+			      type: "info",
+			      showCancelButton: true,
+			      buttons: [
+			        'Batal',
+			        'Yakin!'
+			      ],
+			    }).then(function(isConfirm) {
+			      if (isConfirm) {
+			      	         $.ajax({
+			                        url: "../cek-register/cek-register.php",
+			                        type: "POST",
+			                        data: $('#formInput').serialize(), //serialize() untuk mengambil semua data di dalam form
+			                        dataType: "html",
+			                        success: function(){
+			                            setTimeout(function(){
+											swal({
+									          title: 'Shortlisted!',
+									          text: 'Candidates are successfully shortlisted!',
+									          icon: 'success'
+									        }).then(function() {
+									           window.location="../auth/login.php";// <--- submit form programmatically
+									        });
+										}, 2000);
+			                        },
+			                        error: function (xhr, ajaxOptions, thrownError) {
+			                            setTimeout(function(){
+			                                swal("Error", "Tolong Cek Koneksi Lalu Ulangi", "error");
+			                            }, 2000);}
+			            	});
+			      } else {
+			        swal("Cancelled", "Your imaginary file is safe :)", "error");
+			      }
+			    })
+
+
+
+
+			        // $(this).find('.textbox').each(function(){
+			        //     if (! $(this).val()){
+			        //         get_error_text(this);
+			        //         valid = false;
+			        //         $('html,body').animate({scrollTop: 0},"slow");
+			        //     }
+			        //     if ($(this).hasClass('no-valid')){
+			        //         valid = false;
+			        //         $('html,body').animate({scrollTop: 0},"slow");
+			        //     }
+			        // });
+			        // console.log(valid);
+
+			        // if (valid){
+			            // swal({
+			                          // title: "Konfirmasi Simpan Data",
+			                          // text: "Data Akan di Simpan Ke Database",
+			                          // type: "info",
+			                          // showCancelButton: true,
+			                          // confirmButtonColor: "#1da1f2",
+			                          // confirmButtonText: "Yakin!",
+			            //               closeOnConfirm: false,
+			            //               showLoaderOnConfirm: true,
+			            //         }, function () { //apabila sweet alert d confirm maka akan mengirim data ke simpan.php melalui proses ajax
+			             //        $.ajax({
+			             //            url: "../cek-register/cek-register.php",
+			             //            type: "POST",
+			             //            data: $('#formInput').serialize(), //serialize() untuk mengambil semua data di dalam form
+			             //            dataType: "html",
+			             //            success: function(){
+			             //                setTimeout(function(){
+			             //                  swal({
+			             //                    title:"Data Berhasil Disimpan",
+			             //                    text: "Terimakasih, Silahkan Login!",
+			             //                    type: "success"
+			             //                  }, function(){
+			             //                    window.location="../auth/login.php";
+			             //                  });
+			             //                }, 2000);
+			             //            },
+			             //            error: function (xhr, ajaxOptions, thrownError) {
+			             //                setTimeout(function(){
+			             //                    swal("Error", "Tolong Cek Koneksi Lalu Ulangi", "error");
+			             //                }, 2000);}
+			            	// });
+			            // });
+			        // }
+			    });
+			});
+
+
+			function empty(e) {
+		      switch (e) {
+		        case "":
+		        case 0:
+		        case "0":
+		        case null:
+		        case false:
+		        case typeof(e) == "undefined":
+		          return true;
+		        default:
+		          return false;
+		      }
+		    }
+		    function show_xpanel(class_){
+		      $('.'+class_).show();
+		    }
+		    function hide_xpanel(class_){
+		      $('.'+class_).hide();
+		    }
+		</script>
+
+
+
+		<script src="<?php echo $config['web']['url'] ?>assets/js/pages/custom/login/popper.min.js"></script>
+		<script src="<?php echo $config['web']['url'] ?>assets/js/pages/custom/login/bootstrap.min.js"></script>
+		<!-- End JS -->
+
+		</body>
+</html>
