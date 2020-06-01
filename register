@@ -1,0 +1,164 @@
+<?php
+session_start();
+require '../config.php';
+$tipe = "Daftar";
+
+    $secret_key = '6Le5l_cUAAAAAENaQC6ZrSsGuN2doQY36h-vNue5'; //masukkan secret key-nya berdasarkan secret key masing-masing saat create api key nya
+    $captcha = $_POST['g-recaptcha-response'];
+    $url = 'https://www.google.com/recaptcha/api/siteverify?secret=' . urlencode($secret_key) . '&response=' . $captcha;
+
+require '../lib/header_home.php';
+
+?>
+
+        <!-- Start Page Register -->
+        <div class="login-2" style="background:rgb(0,232,255);background:linear-gradient(0deg,rgba(0,232,255,1)0%,rgba(33,137,217,1)100%);">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-section">
+                            <h3>Daftar Akun</h3>
+                            <?php
+                            if (isset($_SESSION['hasil'])) {
+                            ?>
+                            <div class="alert alert-<?php echo $_SESSION['hasil']['alert'] ?> alert-dismissible" role="alert">
+                                <?php echo $_SESSION['hasil']['pesan'] ?>
+                            </div>
+                            <?php
+                            unset($_SESSION['hasil']);
+                            }
+                            ?>
+                            <!--  ini id form yang di ilangin id="forminput"  class="form-horizontal"  method="POST"-->
+                            <div class="login-inner-form" class="form-horizontal"  method="POST">
+                                <form id="formInput">
+                                    <input type="hidden" id="csrf_token" name="csrf_token" value="<?php echo $config['csrf_token'] ?>">
+                                    <div class="row">
+                                        <div class="form-group form-box col-md-6 col-12">
+                                            <input id="nama" onchange="onChanges()" type="text" class="input-text textbox" placeholder="Nama Depan" name="nama_depan"  required="">
+                                            <i class="form-control-feedback"></i>
+                                            <small class="text-danger font-13 pull-left" ></small>
+                                        </div>
+                                        <div class="form-group form-box col-md-6 col-12">
+                                            <input id="name" onchange="onChanges()" type="text" class="input-text textbox" placeholder="Nama Belakang" name="nama_belakang"  required="">
+                                            <i class="form-control-feedback"></i>
+                                            <small class="text-danger font-13 pull-left" ></small>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group form-box col-md-6 col-12">
+                                            <input id="email" onchange="onChanges()" type="email" class="input-text textbox" placeholder="Email Aktif" name="email"  required="">
+                                            <i class="form-control-feedback"></i>
+                                            <small class="text-danger pull-left" ></small>
+
+                                            </div>
+                                        <div class="form-group form-box col-md-6 col-12">
+                                            <input id="no_hp" onchange="onChanges()" type="number" class="input-text textbox" placeholder="Nomor HP" name="no_hp"  required="">
+                                            <i class="form-control-feedback"></i>
+                                            <small class="text-danger pull-left" ></small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-box">
+                                        <input id="username" type="text" class="input-text textbox" placeholder="Username" onchange="onChanges()" name="username" required="">
+                                        <i class="flaticon-user"></i>
+                                        <i class="form-control-feedback"></i>
+                                        <small class="text-danger pull-left" ></small>
+                                    </div>
+
+                                     <!-- Password -->
+
+                                    <div class="form-group form-box">
+                                        <input id="password" onchange="onChanges()" type="password" class="active input-text input textbox" placeholder="Password" name="password" required="">
+                                        <i id="icon" class="flaticon-password"></i>
+                                        <i class="form-control-feedback"></i>
+                                        <small class="text-danger pull-left" ></small>
+                                        </div>
+
+                                    <div class="form-group form-box">
+                                        <input id="password2" onchange="onChanges()" type="password" class="active input-text input textbox" placeholder="Konfirmasi Password" name="password2" required="">
+                                        <i id="icon" class="flaticon-password"></i>
+                                        <i class="form-control-feedback"></i>
+                                        <small class="text-danger pull-left" ></small>
+                                        </div>
+
+                                    <!-- End Password -->
+
+                                    <div class="form-group form-box">
+                                        <input id="pin" onchange="onChanges()" type="number" class="input-text textbox" placeholder="PIN Transaksi Harus 6 Digit" name="pin" required="">
+                                        <i class="flaticon-key"></i>
+                                        <i class="form-control-feedback"></i>
+                                        <small class="text-danger pull-left" ></small>
+                                    </div>
+                                    <div class="form-group form-box">
+                                        <input id="referral" type="text" class="input-text textbox" placeholder="Kode Referral jika ada" name="referral">
+                                        <i class="fa fa-gift"></i>
+                                        <i class="form-control-feedback"></i>
+                                        <small class="text-info pull-left" ></small>
+                                    </div>
+									<div class="form-group form-box">
+                                       <div class="g-recaptcha textbox" data-sitekey="6Le5l_cUAAAAAPQwDkKGYBJX5Nmvb--TwjmwraFm"></div>
+									</div>
+                                    <i class="form-control-feedback"></i>
+                                    <small class="text-info pull-left" ></small>
+                                    <div class="checkbox clearfix">
+                                        <div class="form-check checkbox-theme">
+                                            <input class="form-check-input" type="checkbox" value="" id="rememberMe">
+                                            <label class="form-check-label" for="rememberMe">
+                                                Saya Setuju Dengan Ketentuan Layanan
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mb-0">
+                                      <button id="submit" class="btn btn-primary btn-block" name="daftar">Daftar</button> 
+                                    </div>
+                                    <br />
+                                    <p>Sudah Punya Akun?<a href="<?php echo $config['web']['url'] ?>auth/login"> <b>Masuk</b></a></p>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Page Register -->
+
+
+<script type="text/javascript">
+var input = document.getElementById('password'),
+    icon = document.getElementById('icon');
+
+   icon.onclick = function () {
+
+     if(input.className == 'active') {
+        input.setAttribute('type', 'text');
+        icon.className = 'flaticon-key';
+       input.className = '';
+
+     } else {
+        input.setAttribute('type', 'password');
+        icon.className = 'flaticon-password';
+       input.className = 'active';
+    }
+
+   }
+</script>
+
+<Script>
+    // Start of Tawk.to Script
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+            (function(){
+            var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+                s1.async=true;
+                s1.src='https://embed.tawk.to/5eca19f8c75cbf1769eec926/default';
+                s1.charset='UTF-8';
+                s1.setAttribute('crossorigin','*');
+                s0.parentNode.insertBefore(s1,s0);
+            })();
+
+</script>
+            <!--End of Tawk.to Script-->
+
+<script src='https://www.google.com/recaptcha/api.js'></script>
+
+<?php
+require '../lib/footer_home.php';
+?>
