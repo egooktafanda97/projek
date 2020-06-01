@@ -61,10 +61,13 @@ require '../lib/session_login_admin.php';
                        // masi bingung sama isi nya di db bg--
                         $conn->query("INSERT INTO riwayat_referral VALUES ('', '".$users__referal['username']."', '".$users__['uplink']."', '".$users__referal['kode_referral']."', '".$data_referral['jumlah']."', '$date', '$time')");
 
-                    }
-                    $rT = $users__['riwayat_topUp'];
+                   
+		   // nambah riwayat depo
+		    $rT = $users__['riwayat_topUp'];
                     $rT = $users__['riwayat_topUp']+1;
                     $conn->query("UPDATE users SET riwayat_topUp = '".$rT."' WHERE username = '".$users__referal['username']."'");
+		   }
+                    
 
 
 
