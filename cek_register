@@ -26,6 +26,6 @@ $tipe = "Daftar";
         $hash_password = password_hash($password, PASSWORD_DEFAULT);
         $api_key =  acak(20);
 
-        if ($conn->query("INSERT INTO users VALUES ('', '$nama_depan', '$nama_belakang', '$nama_depan $nama_belakang', '$email', '$username', '$hash_password', '0', '0', '0', 'Member', 'Aktif', 'Sudah Verifikasi', '$pin', '$api_key', 'Pendaftaran Gratis', '$pengguna', '$date', '$time', '0', '$no_hp', '', '$kode_ref', '', '0')") == true);
+        if ($conn->query("INSERT INTO users VALUES ('', '$nama_depan', '$nama_belakang', '$nama_depan $nama_belakang', '$email', '$username', '$hash_password', '0', '0', '0', 'Member', 'Aktif', 'Belum Verifikasi', '$pin', '$api_key', 'Pendaftaran Gratis', '$pengguna', '$date', '$time', '0', '$no_hp', '', '$kode_ref', '', '0','0')") == true);
 
 ?>
